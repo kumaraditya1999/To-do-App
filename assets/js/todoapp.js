@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	$("#register-btn").click(function(){
+	$("#register-btn").click(function(e){
+
+		e.preventDefault();
 		data = {
 			firstname: $("#firstname").val(),
 			lastname: $("#lastname").val(),
@@ -7,13 +9,22 @@ $(document).ready(function(){
 			username : $("#register-username").val(),
 			password: $('#register-password').val()
 		};
-
-		$.post('/register',data,function(data,status){
+		var success = function(data,status){
 			console.log(data);
+			
+		}; 
+		console.log("sending request");
+		$.ajax({
+		  type: "POST",
+		  url: '/register',
+		  data: data,
+		  success:success
 		});
+
 	});
 
-	$("#login-btn").click(function(){
+	$("#login-btn").click(function(e){
+		e.preventDefault();
 		data = {
 			username : $("#login-username").val(),
 			password: $('#login-password').val()

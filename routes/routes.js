@@ -1,28 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/user.model.js');
 
+var authenticate = require('../controllers/authenticate.controller');
 
 router.get('/',function(req,res){
-	res.render('todoview.ejs');
+	res.render('todoview.ejs',{message :""});
 });
 
-router.post('/register',function(req,res){
-	console.log(req);
-	var user = new User({
-		firstname : req.body.firstname,
-		lastname : req.body.lastname,
-		email : req.body.email,
-		username : req.body.username,
-		password : req.body.password
-	});
-
-	user.save();
-	
-});
-
-router.post('/login',function(req,res){
-	console.log(req);
-});
+router.post('/register',authenticate.register);
+router.post('/login',authenticate.login);
 
 module.exports = router;
