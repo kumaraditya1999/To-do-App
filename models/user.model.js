@@ -24,4 +24,4 @@ let UserSchema = new Schema({
 	reminders : ReminderSchema
 });
 
-module.exports = moogose.model('User',UserSchema);
+module.exports = mongoose.model('User',UserSchema);

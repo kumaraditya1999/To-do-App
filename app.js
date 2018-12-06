@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var app = express();
 
 
-connect to the data base
+//connect to the data base
 let dev_db_url = 'mongodb://aditya:aditya123@ds225624.mlab.com:25624/todoapp';
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(dev_db_url);
