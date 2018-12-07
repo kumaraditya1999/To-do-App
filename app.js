@@ -28,14 +28,10 @@ app.use(express.static('assets'));
 
 //use the routes
 var routes = require('./routes/routes');
+var profile_routes = require('./routes/profile.routes')
+
+app.use('/profile',profile_routes);
 app.use('/',routes);
-
-
-app.get('/',function(req,res){
-	console.log("uojls");
-});
-
-
 
 
 app.listen('3000',()=>{
