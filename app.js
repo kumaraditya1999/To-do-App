@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var session = require('express-session');
 
 
 //declare the app
@@ -19,8 +20,19 @@ db.once('open',function(){
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //middleware
+
+app.use(session({
+    key: 'user_sid',
+    secret: 'somerandonstuffs',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+        expires: 600000
+    }
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
 
 //set up the template engines
 app.set('view engine','ejs');

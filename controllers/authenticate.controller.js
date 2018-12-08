@@ -1,9 +1,11 @@
 var User = require('../models/user.model.js');
 var bcrypt = require('bcryptjs');
-var salt = 100;
+var salt = 8;
 var url = require('url');
+var session =require('express-session');
 
 exports.register = function(req,res){
+	console.log(req.session);
 	User.findOne({username : req.body.username}).then(function(result){
 		if(result){
 			res.redirect(url.format({
@@ -21,7 +23,7 @@ exports.register = function(req,res){
 				          "message": "this email is already in use please login instead!!! " }
 				     }));
 				}else{
-					bcrypt.hash(req.body.password,8, (err, hash) => {
+					bcrypt.hash(req.body.password,salt, (err, hash) => {
   						var user = new User({
 							firstname : req.body.firstname,
 							lastname : req.body.lastname,
@@ -29,6 +31,7 @@ exports.register = function(req,res){
 							username : req.body.username,
 							password : hash
 						}).save().then(function(data,err){
+								req.session.username = req.body.username;
 								res.redirect(url.format({
 							       pathname:"/profile",
 							       query: {
@@ -46,11 +49,13 @@ exports.register = function(req,res){
 }
 
 exports.login = function(req,res){
+	console.log(req.session);
 	var resobj = res;
 	User.findOne({username : req.body.username}).then(function(result){
 		if(result){
 			bcrypt.compare(req.body.password,result.password , (err, res) => {
  				 if(res==true){
+ 				 	 req.session.username = req.body.username;
  				 	resobj.redirect(url.format({
 				       pathname:"/profile",
 				       query: {
@@ -74,3 +79,23 @@ exports.login = function(req,res){
 	});
 
 }
+
+exports.logout = function(req,res){
+	console.log(req.session);
+	req.session.destroy(function(err) {
+  if(err) {
+    console.log(err);
+  } else {
+    res.redirect('/');
+  }
+});
+
+}
+
+// exports.checkAuthentic = function(req,res,next){
+// 	if(req.session.username){
+// 		next();
+// 	}else{
+// 		res.redirect('/',{message : "please login or register first"});
+// 	}
+// }
