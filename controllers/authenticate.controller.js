@@ -32,6 +32,7 @@ exports.register = function(req,res){
 							password : hash
 						}).save().then(function(data,err){
 								req.session.username = req.body.username;
+								req.session.user = result;
 								res.redirect(url.format({
 							       pathname:"/profile",
 							       query: {
@@ -56,6 +57,7 @@ exports.login = function(req,res){
 			bcrypt.compare(req.body.password,result.password , (err, res) => {
  				 if(res==true){
  				 	 req.session.username = req.body.username;
+ 				 	 req.session.user = result;
  				 	resobj.redirect(url.format({
 				       pathname:"/profile",
 				       query: {

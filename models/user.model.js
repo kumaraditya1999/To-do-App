@@ -4,15 +4,11 @@ const Schema = mongoose.Schema;
 let NotesSchema = new Schema({
 	title : String,
 	description : String,
-	rating : Number,
-	time : String
+	priority : Number,
+	time : String,
+	date : String,
 });
 
-let ReminderSchema = new Schema({
-	title : String,
-	description : String,
-	time : String
-});
 
 let UserSchema = new Schema({
 	firstname : {type: String,require : true,max:100},
@@ -20,8 +16,7 @@ let UserSchema = new Schema({
 	email : {type: String,require : true,max:100},
 	username : {type: String,require : true,max:100},
 	password : {type: String,require: true, max:100},
-	notes : NotesSchema,
-	reminders : ReminderSchema
+	notes : [{type :NotesSchema}],
 });
 
 module.exports = mongoose.model('User',UserSchema);

@@ -2,24 +2,107 @@
 	<head>
 		<title>To Do App</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<style type="text/css">
+
 		   #login,#register{
 		   	border: solid 2px black;
 		   }
+		   form{
+		   	margin: auto;
+		   }
+		   button{
+		   	margin-left: 5px;
+		   }
+		   .fa-star{
+		   	color: gray;
+		   	cursor: pointer;
+		   }
+		   
 
 		</style>
 	</head>
 	<body>
-		<div class="container">
-			<h1>Welcome User</h1>
-		</div>	
-		<button id="logout-btn" class="btn">logout</button>	
+		<nav class="nav navbar navbar-light ">
+			<span class="navbar-brand">TO DO</span>
+			<!-- <div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					more
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownmenu">
+					<li><a href="#">Notes</a></li>
+    				<li><a href="#">Reminders</a></li>
+				</ul>
+			</div> -->
+			<form class="form-inline">
+				<input class="form-control" type="search" placeholder="Search..." ariel-label="Search">
+				<button class="btn" type="submit"><i class="fas fa-search"></i></button>
+			</form>
 
+
+			<button id="logout-btn" class="btn">logout</button>	
+		</nav>	
+
+		<div class="container">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+			  Add Something
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Add a note</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form id="addition notes">
+						<div class="form-group">
+						<input type="text" placeholder="Title" name="title" id="title" class="form-control" required="true">
+						</div>
+						<div class="form-group">
+						<input type="text" name="description" placeholder="Description" id="description" class="form-control"required="true">
+						</div>
+						<div class="form-group" id="ratings">
+							Priotiy : 
+							<span class="fa fa-star" id="1"></span>
+							<span class="fa fa-star" id="2"></span>
+							<span class="fa fa-star" id="3"></span>
+							<span class="fa fa-star" id="4"></span>
+							<span class="fa fa-star" id="5"></span>
+						</div>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-primary" id="add-btn">Add</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<div id="notes">
+				<%if(notes){ %>
+				<% for(var i=0;i<notes.length;i++){ %>
+				<div class="notes" id= "note-<%= i %>">
+					Title : <%= notes[i].title %>
+					<br>
+					Description : <%= notes[i].description %>
+				</div>
+				<% } }%>
+			</div>
+
+		</div>
+	
 		
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script type="text/javascript " src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script type="text/javascript " src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	
 	<script type="text/javascript" src="/js/profile.js"></script>
 	</body>
 </html>
