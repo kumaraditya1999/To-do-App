@@ -5,7 +5,7 @@ var url = require('url');
 var session =require('express-session');
 
 exports.register = function(req,res){
-	console.log(req.session);
+
 	User.findOne({username : req.body.username}).then(function(result){
 		if(result){
 			res.redirect(url.format({
@@ -30,9 +30,10 @@ exports.register = function(req,res){
 							email : req.body.email,
 							username : req.body.username,
 							password : hash
-						}).save().then(function(data,err){
+						});
+						user.save().then(function(data,err){
 								req.session.username = req.body.username;
-								req.session.user = result;
+								req.session.user = user;
 								res.redirect(url.format({
 							       pathname:"/profile",
 							       query: {
@@ -50,7 +51,7 @@ exports.register = function(req,res){
 }
 
 exports.login = function(req,res){
-	console.log(req.session);
+
 	var resobj = res;
 	User.findOne({username : req.body.username}).then(function(result){
 		if(result){
@@ -83,7 +84,7 @@ exports.login = function(req,res){
 }
 
 exports.logout = function(req,res){
-	console.log(req.session);
+	
 	req.session.destroy(function(err) {
   if(err) {
     console.log(err);

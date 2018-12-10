@@ -1,9 +1,8 @@
 $(document).ready(function(){
 		$("#logout-btn").click(function(e){
-			console.log("clicked");
+			
 			$.post("/logout",function(data,status){
-				console.log("logged out");
-				console.log(status);
+				
 				if(status=="success"){
 					document.location.href = '/';
 				}
@@ -14,7 +13,7 @@ $(document).ready(function(){
 		var rating=0;
 		var ratingSpan = $("#ratings span");
 		ratingSpan.click(function(e){
-			console.log(e.target.id);
+			
 			for(var i=0;i<e.target.id;i++){
 				ratingSpan.eq(i).css({"color":"orange"});
 			}
@@ -41,7 +40,6 @@ $(document).ready(function(){
 				url :'/profile/add',
 				data : data,
 				success : function(data,status){
-					console.log(data);
 					var title = data.title;
 					var length = data.length;
 					var description = data.description;

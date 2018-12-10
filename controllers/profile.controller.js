@@ -4,8 +4,9 @@ var Users = require('../models/user.model');
 
 
 exports.home = function(req,res){
-	console.log(req.session.username);
-	console.log(req.session.user);
+	console.log("here in home");
+	console.log(req.session);
+	//console.log(req.session.user);
 	var user = req.session.user;
 	res.render('profile.ejs',{username :user.username,notes: user.notes});
 }
