@@ -4,8 +4,6 @@ var Users = require('../models/user.model');
 
 
 exports.home = function(req,res){
-	console.log("here in home");
-	console.log(req.session);
 	//console.log(req.session.user);
 	var user = req.session.user;
 	res.render('profile.ejs',{username :user.username,notes: user.notes});
@@ -25,7 +23,6 @@ exports.checkAuthentic = function(req,res,next){
 }
 
 exports.add = function(req,res){
-	//console.log(req.body);
 	var note = {
 		title : req.body.title,
 		description : req.body.description,
@@ -33,18 +30,39 @@ exports.add = function(req,res){
 		time : req.body.time,
 		data : req.body.data,
 	}
-	// title : String,
-	// description : String,
-	// priority : Number,
-	// time : String,
-	// date : String,
 
 	var notes2 = req.session.user.notes;
 	notes2.push(note);
-	console.log(notes2);
 	Users.findOneAndUpdate({username : req.session.username},{notes : notes2}).then(function(result){
-		// result.notes.push(req.body);
-		res.send(req.body);
+		// result.notes.push(req.body)
+		var send = req.body;
+		res.send(send);
 		console.log(result);
+	});
+}
+
+exports.delete = function(req,res){
+	var notes2 = req.session.user.notes;
+	notes2.splice(req.body.index,1);
+	Users.findOneAndUpdate({username : req.session.username},{notes : notes2}).then(function(result){
+		console.log(result);
+		res.send("deleted");
+	});
+}
+
+exports.modify = function(req,res){
+	var note = {
+		title : req.body.title,
+		description : req.body.description,
+		priority : req.body.priority,
+		time : req.body.time,
+		data : req.body.data,
+	}
+	var notes2 = req.session.user.notes;
+	notes2[req.body.index] = note;
+	Users.findOneAndUpdate({username : req.session.username},{notes : notes2}).then(function(result){
+		console.log(result);
+
+		res.send(req.body);
 	});
 }

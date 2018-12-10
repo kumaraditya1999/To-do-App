@@ -87,13 +87,62 @@
 			<div id="notes">
 				<%if(notes){ %>
 				<% for(var i=0;i<notes.length;i++){ %>
-				<div class="notes" id= "note-<%= i %>">
-					Title : <%= notes[i].title %>
-					<br>
-					Description : <%= notes[i].description %>
+				<div class="notes card">
+					<div class="card-header">
+						<strong><%= notes[i].title %></strong>
+					</div>
+					<div class="card-body">
+						<div class="description">
+							<%= notes[i].description %>
+						</div>
+						<div class="priority">
+							<%= notes[i].priority %>
+						</div>	
+					</div>
+					<div class="card-footer">
+						<button class="btn btn-default"><i class="fas fa-pen"></i></button>
+						<button class="btn btn-default"><i class="far fa-trash-alt"></i></button>
+					</div>
+					
 				</div>
 				<% } }%>
 			</div>
+
+			<!--modification modal -->
+			<div class="modal fade" id="modificationModal" tabindex="-1" role="dialog" aria-labelledby="modificationModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Modify</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form id="modification notes">
+						<div class="form-group">
+						<input type="text" placeholder="Title" name="title" id="mod-title" class="form-control" required="true">
+						</div>
+						<div class="form-group">
+						<input type="text" name="description" placeholder="Description" id="mod-description" class="form-control"required="true">
+						</div>
+						<div class="form-group" id="mod-ratings">
+							Priotiy : 
+							<span class="fa fa-star" id="1"></span>
+							<span class="fa fa-star" id="2"></span>
+							<span class="fa fa-star" id="3"></span>
+							<span class="fa fa-star" id="4"></span>
+							<span class="fa fa-star" id="5"></span>
+						</div>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-primary" id="mod-btn">Modify</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
 
 		</div>
 	
