@@ -25,16 +25,6 @@
 	<body>
 		<nav class="nav navbar navbar-light ">
 			<span class="navbar-brand">TO DO</span>
-			<!-- <div class="dropdown">
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					more
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownmenu">
-					<li><a href="#">Notes</a></li>
-    				<li><a href="#">Reminders</a></li>
-				</ul>
-			</div> -->
 			<form class="form-inline">
 				<input class="form-control" type="search" placeholder="Search..." ariel-label="Search">
 				<button class="btn" type="submit"><i class="fas fa-search"></i></button>
@@ -45,9 +35,90 @@
 		</nav>	
 
 		<div class="container">
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-			  Add Something
-			</button>
+
+			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+			  <li class="nav-item">
+			    <a class="nav-link active" id="pills-notes-tab" data-toggle="pill" href="#pills-notes" role="tab" aria-controls="pills-notes" aria-selected="true">Notes</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" id="pills-meetings-tab" data-toggle="pill" href="#pills-meetings" role="tab" aria-controls="pills-meetings" aria-selected="false">Meetings</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" id="pills-calender-tab" data-toggle="pill" href="#pills-calender" role="tab" aria-controls="pills-calender" aria-selected="false">Calender</a>
+			  </li>
+			</ul>
+
+			<div class="tab-content" id="pills-tabContent">
+			  <div class="tab-pane fade show active" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab">
+			  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+				  Add Something
+				</button>
+				  	<div id="notes">
+						<%if(notes){ %>
+						<% for(var i=0;i<notes.length;i++){ %>
+						<div class="notes card">
+							<div class="card-header">
+								<strong><%= notes[i].title %></strong>
+							</div>
+							<div class="card-body">
+								<div class="description">
+									<%= notes[i].description %>
+								</div>
+								<div class="priority">
+									<%= notes[i].priority %>
+								</div>	
+							</div>
+							<div class="card-footer">
+								<button class="btn btn-default"><i class="fas fa-pen notes-mod"></i></button>
+								<button class="btn btn-default"><i class="far fa-trash-alt notes-del"></i></button>
+							</div>
+							
+						</div>
+						<% } }%>
+					</div>
+				</div>
+
+
+			  <div class="tab-pane fade" id="pills-meetings" role="tabpanel" aria-labelledby="pills-meetings-tab">
+			  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meetingsModal">
+				  Add an Appointment
+				</button>
+				  	<div id="meetings">
+						<%if(meetings){ %>
+						<% for(var i=0;i<meetings.length;i++){ %>
+						<div class="meetings card">
+							<div class="card-header">
+								<strong><%= meetings[i].title %></strong>
+							</div>
+							<div class="card-body">
+								<div class="description">
+									<%= meetings[i].description %>
+								</div>
+								<div class="with">
+									with:<%= meetings[i].with %>
+								</div>	
+								<div class="date">
+									Date : <%= meetings[i].date %>
+								</div>
+								<div class="time">
+									Time:<%= meetings[i].time %>
+								</div>
+							</div>
+							<div class="card-footer">
+								<button class="btn btn-default"><i class="fas fa-pen meetings-mod"></i></button>
+								<button class="btn btn-default"><i class="far fa-trash-alt meetings-del"></i></button>
+							</div>
+							
+						</div>
+						<% } }%>
+					</div>
+
+
+
+			  </div>
+			  <div class="tab-pane fade" id="pills-calender" role="tabpanel" aria-labelledby="pills-calender-tab">...</div>
+			</div>  
+			
 
 			<!-- Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -84,29 +155,7 @@
 			  </div>
 			</div>
 			
-			<div id="notes">
-				<%if(notes){ %>
-				<% for(var i=0;i<notes.length;i++){ %>
-				<div class="notes card">
-					<div class="card-header">
-						<strong><%= notes[i].title %></strong>
-					</div>
-					<div class="card-body">
-						<div class="description">
-							<%= notes[i].description %>
-						</div>
-						<div class="priority">
-							<%= notes[i].priority %>
-						</div>	
-					</div>
-					<div class="card-footer">
-						<button class="btn btn-default"><i class="fas fa-pen"></i></button>
-						<button class="btn btn-default"><i class="far fa-trash-alt"></i></button>
-					</div>
-					
-				</div>
-				<% } }%>
-			</div>
+			
 
 			<!--modification modal -->
 			<div class="modal fade" id="modificationModal" tabindex="-1" role="dialog" aria-labelledby="modificationModalLabel" aria-hidden="true">
@@ -144,7 +193,65 @@
 			</div>
 
 
+			<!--meetings modal -->
+			<div class="modal fade" id="meetingsModal" tabindex="-1" role="dialog" aria-labelledby="meetingsModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="meetingsModalLabel">Add an Appointment</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true" id="meeting-modal-close">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form id="addition-meetings" >
+			        	<div id="no-meeting-title-error" style="display:none">
+							Title is required
+						</div>
+						<div class="form-group">
+							<input type="text" placeholder="Title" name="meeting-title" id="meeting-title" class="form-control" required="true">
+						</div>
+						<div id="no-meeting-description-error" style="display:none">
+							Description is required
+						</div>
+						<div class="form-group">
+							<input type="text" name="meeting-description" placeholder="Description" id="meeting-description" class="form-control"required="true">
+						</div>
+						<div id="no-user-error" style="display:none">
+							username not found
+						</div>
+						<div id="no-meeting-with-error" style="display:none">
+							Username is required
+						</div>
+						<div class="form-group">
+							<input type="text" name="meeting-with" placeholder="Enter the appointee's username" id="meeting-with" class="form-control"required="true">
+						</div>
+						<div id="no-meeting-date-error" style="display:none">
+							Date is required
+						</div>
+						<div class="form-group">
+							<input type="date" name="meeting-date" id="meeting-date" required="true">
+						</div>
+						<div id="no-meeting-time-error" style="display:none">
+							Time is required
+						</div>
+						<div class="form-group">
+							<input type="time" name="meeting-time" id="meeting-time" required="true">
+						</div>
+						
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-primary" id="meeting-add-btn">Add</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+
 		</div>
+
+	
 	
 		
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -6,7 +6,7 @@ var Users = require('../models/user.model');
 exports.home = function(req,res){
 	//console.log(req.session.user);
 	var user = req.session.user;
-	res.render('profile.ejs',{username :user.username,notes: user.notes});
+	res.render('profile.ejs',{username :user.username,notes: user.notes,meetings :user.meetings});
 }
 
 exports.checkAuthentic = function(req,res,next){
@@ -28,7 +28,7 @@ exports.add = function(req,res){
 		description : req.body.description,
 		priority : req.body.priority,
 		time : req.body.time,
-		data : req.body.data,
+		date : req.body.date,
 	}
 
 	var notes2 = req.session.user.notes;
@@ -56,7 +56,7 @@ exports.modify = function(req,res){
 		description : req.body.description,
 		priority : req.body.priority,
 		time : req.body.time,
-		data : req.body.data,
+		date : req.body.date,
 	}
 	var notes2 = req.session.user.notes;
 	notes2[req.body.index] = note;
@@ -65,4 +65,57 @@ exports.modify = function(req,res){
 
 		res.send(req.body);
 	});
+}
+
+
+//meetings part
+
+exports.add_meeting = function(req,res){
+	var meeting = {
+	title : req.body.title,
+	description : req.body.description,
+	with : req.body.with,
+	date : req.body.date,
+	time : req.body.time,
+	};
+	var secondMeeting = {
+	title : req.body.title,
+	description : req.body.description,
+	with : req.session.user.username,
+	date : req.body.date,
+	time : req.body.time,
+	}
+	var With = req.body.with;
+	Users.findOne({username : With}).then(function(result){
+		if(result){
+			var meetings2 = result.meetings;
+			meetings2.push(secondMeeting);
+			Users.findOneAndUpdate({username : With},{meetings : meetings2}).then(function(result){
+		// result.notes.push(req.body)
+				// var send = req.body;
+				// send.status = 1;
+				// res.send(send);
+				// console.log(result);
+				var meetings2 = req.session.user.meetings;
+				meetings2.push(meeting);
+				Users.findOneAndUpdate({ username:req.session.user.username},{meetings : meetings2}).then(function(result){
+					var send = req.body;
+				send.status = 1;
+				res.send(send);
+				console.log("updated");
+				});
+
+			});
+
+		}else{
+			console.log("here");
+			send = {
+				status : 0,
+				message : "user not found",
+			}
+			
+			res.send(send);
+		}
+	}) ;
+	
 }

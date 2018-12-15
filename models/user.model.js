@@ -9,6 +9,20 @@ let NotesSchema = new Schema({
 	date : String,
 });
 
+let MeetingSchema = new Schema({
+	title : String,
+	description : String,
+	with : String,
+	date : String,
+	time : String,
+});
+
+let ReminderSchema = new Schema({
+	title : String,
+	description: String,
+	date : String,
+	time : String,
+})
 
 let UserSchema = new Schema({
 	firstname : {type: String,require : true,max:100},
@@ -17,6 +31,8 @@ let UserSchema = new Schema({
 	username : {type: String,require : true,max:100},
 	password : {type: String,require: true, max:100},
 	notes : [{type :NotesSchema}],
+	reminders : [{type :ReminderSchema }],
+	meetings : [{type :MeetingSchema }]
 });
 
 module.exports = mongoose.model('User',UserSchema);
