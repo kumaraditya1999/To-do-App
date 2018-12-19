@@ -37,7 +37,6 @@ exports.add = function(req,res){
 		// result.notes.push(req.body)
 		var send = req.body;
 		res.send(send);
-		console.log(result);
 	});
 }
 
@@ -45,7 +44,6 @@ exports.delete = function(req,res){
 	var notes2 = req.session.user.notes;
 	notes2.splice(req.body.index,1);
 	Users.findOneAndUpdate({username : req.session.username},{notes : notes2}).then(function(result){
-		console.log(result);
 		res.send("deleted");
 	});
 }
@@ -61,7 +59,6 @@ exports.modify = function(req,res){
 	var notes2 = req.session.user.notes;
 	notes2[req.body.index] = note;
 	Users.findOneAndUpdate({username : req.session.username},{notes : notes2}).then(function(result){
-		console.log(result);
 
 		res.send(req.body);
 	});
@@ -102,13 +99,11 @@ exports.add_meeting = function(req,res){
 					var send = req.body;
 				send.status = 1;
 				res.send(send);
-				console.log("updated");
 				});
 
 			});
 
 		}else{
-			console.log("here");
 			send = {
 				status : 0,
 				message : "user not found",
@@ -118,4 +113,54 @@ exports.add_meeting = function(req,res){
 		}
 	}) ;
 	
+}
+
+var check = function(i,meeting1,meeting2){
+	console.log(meeting1.title==meeting2.title&&meetings1.date==meeting2.date
+					&&meetings1.description==meeting2.description);
+}
+
+exports.delete_meeting = function(req,res){
+
+	var meetings2 = req.session.user.meetings;
+	var meeting = meetings2[req.body.index];
+	meetings2.splice(req.body.index,1);
+
+	
+	Users.findOneAndUpdate({username : req.session.username},{meetings : meetings2}).then(function(result){
+
+		Users.findOne({username : meeting.with }).then(function(result){
+			var index=0;
+	
+			meeting.with = req.session.user.username;
+			meetings2 = result.meetings;
+			//meetings2 = meetings2.splice(meetings2.indexOf(meeting),1);
+			//console.log(meeting,meetings2);
+			var index=-1;
+			for(i=0;i<meetings2.length;i++){
+				
+				if(meetings2[i].title==meeting.title&&meetings2[i].description==meeting.description&&
+					meetings2[i].date==meeting.date){
+					meetings2.splice(i,1);
+					Users.findOneAndUpdate({ username : result.username},{meetings : meetings2}).then(function(result){
+						res.send("done");
+					});
+				}
+
+			}
+
+			
+		});
+	});
+
+
+}
+
+
+exports.test = function(req,res){
+	for(i=0;i<100;i++){
+		console.log(i);
+	}
+
+	res.send("done");
 }

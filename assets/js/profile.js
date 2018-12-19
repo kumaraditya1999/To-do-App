@@ -270,7 +270,7 @@ $(document).ready(function(){
 							</div>\
 							<div class=\"card-footer\">\
 								<button class=\"btn btn-default\"><i class=\"fas fa-pen meetings-mod\"></i></button>\
-								<button class=\"btn btn-default\"><i class=\"far fa-trash-alt meetings-del\"></i></button>\
+								<button class=\"btn btn-default\"><i class=\"fas fa-times meetings-del\"></i></button>\
 							</div>\
 							</div>");
 
@@ -287,6 +287,26 @@ $(document).ready(function(){
 
 			}
 			
+		});
+
+
+
+		$(".meetings-del").click(function(e){
+			var pardiv = $(this).parent().parent().parent();
+			var index = $(".meetings").index(pardiv);
+			console.log(index);
+			data = { 
+				index : Number(index),
+			};
+			$.ajax({
+				type:"POST",
+				url :'/profile/delete-meeting',
+				data : data,
+				success : function(data,status){
+					console.log(data);
+					pardiv.remove();
+				}
+			});
 		});
 
 

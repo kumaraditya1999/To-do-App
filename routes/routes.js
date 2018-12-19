@@ -4,9 +4,7 @@ var router = express.Router();
 var authenticate = require('../controllers/authenticate.controller');
 
 router.get('/',function(req,res){
-	console.log("here in /");
 	req.session.username = "";
-	console.log(req.query);
 	res.render('todoview.ejs',{message :req.query.message});
 });
 
