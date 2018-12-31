@@ -2,76 +2,133 @@
 	<head>
 		<title>To Do App</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<style type="text/css">
-		   #login,#register{
-		   	border: solid 2px black;
-		   }
 
+		<style type="text/css">
+			#login-modal {
+			  position: absolute;
+			  left: 35vw;
+			  top: 50vh;
+			}
+			#register-modal {
+			  position: absolute;
+			  left: 60vw;
+			  top:50vh;
+			}
+			h1,h2{
+				text-align: center;
+				margin-top: 50px;
+			}
 		</style>
+		
 	</head>
 	<body>
+		<strong>
 		<div class="container">
 			<nav class="nav nav-bar">
-			<ul>
-				<li>login</li>
-				<li>register</li>
-			</ul>
+				<button class="btn btn-primary" id="login-modal">Login</button>
+				<button class="btn btn-primary" id="register-modal">Register</button>
 			</nav>
 			
-				<% if(message) { %>
-					<div>
-					<%= message %>
-					</div>
-				<% } %>
+				
 
 
-			<div id="login">
-				<form action="/login" method="POST">
-					<div class="form-group">
-						<label for="username">username</label>
-						<input class="form-control" type="text" name="username" placeholder="username" required="true" id="login-username">
-					</div>
-					<div class="form-group">
-						<label for="password">password</label>
-						<input class="form-control" type="password" name="password" required="true" id="login-password">
-					</div>
-					<button class="btn" type="submit" id="login-btn">LOGIN</button>
-				</form>
+			<div>
+				<h1><strong>To Do App</strong></h1>
+				<h2><strong>A simple web app to manage to your to do task and appointments<strong></strong></h2>
+
+				<h3>
+					<% if(message){%>
+					<%=  %>
+				}
+				</h3>
 			</div>
-			<div id="register">
-				<form action="/register" method="POST">
-					<div class="form-group">
-						<label for="firstname">firstname</label>
-						<input class="form-control" type="text" name="firstname" placeholder="firstname" required="true" id="firstname">
-					</div>
-					<div class="form-group">
-						<label for="lastname">lastname</label>
-						<input class="form-control" type="text" name="lastname" placeholder="lastname" required="true" id="lastname">
-					</div>
-					<div class="form-group">
-						<label for="email">email</label>
-						<input class="form-control" type="email" name="email" placeholder="email@xyz.com" required="true" id="email">
-					</div>
-
-					<div class="form-group">
-						<label for="username">username</label>
-						<input class="form-control" type="text" name="username" placeholder="username" required="true" id="register-username">
-					</div>
-					<div class="form-group">
-						<label for="password">password</label>
-						<input class="form-control" type="password" name="password" required="true" id="register-password">
-					</div>
-					<button class="btn" type="submit" id="register-btn">Register</button>
-				</form>
-			</div>
-		</div>
+			
 		
+		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel"><strong>Register</strong></h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div id="register">
+			        				
+			        				<form action="/register" method="POST">
+			        					<div class="form-group">
+			        						<label for="firstname">Firstname</label>
+			        						<input class="form-control" type="text" name="firstname" placeholder="firstname" required="true" id="firstname">
+			        					</div>
+			        					<div class="form-group">
+			        						<label for="lastname">Lastname</label>
+			        						<input class="form-control" type="text" name="lastname" placeholder="lastname" required="true" id="lastname">
+			        					</div>
+			        					<div class="form-group">
+			        						<label for="email">Email</label>
+			        						<input class="form-control" type="email" name="email" placeholder="email@xyz.com" required="true" id="email">
+			        					</div>
+
+			        					<div class="form-group">
+			        						<label for="username">Username</label>
+			        						<input class="form-control" type="text" name="username" placeholder="username" required="true" id="register-username">
+			        					</div>
+			        					<div class="form-group">
+			        						<label for="password">Password</label>
+			        						<input class="form-control" type="password" name="password" required="true" id="register-password">
+			        					</div>
+			        					<button class="btn" type="submit" id="register-btn"><strong>Register</strong></button>
+			        				</form>
+			        			</div>
+			        		</div>
+			      
+			      <div class="modal-footer">
+			        <strong id="login-link">Login Instead<strong>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel"><strong>Login</strong></h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div id="login">
+			        	
+			        				<form action="/login" method="POST">
+			        					<div class="form-group">
+			        						<label for="username">Username</label>
+			        						<input class="form-control" type="text" name="username" placeholder="username" required="true" id="login-username">
+			        					</div>
+			        					<div class="form-group">
+			        						<label for="password">Password</label>
+			        						<input class="form-control" type="password" name="password" required="true" id="login-password">
+			        					</div>
+			        					<button class="btn" type="submit" id="login-btn"><strong>LOGIN</strong></button>
+			        				</form>
+			        			</div>
+			      <div class="modal-footer">
+			        <strong id="register-link">Register Instead<strong>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+
+
 
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script type="text/javascript " src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<!-- <script type="text/javascript " src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 	<script type="text/javascript" src="/js/todoapp.js"></script>
 	</body>
 </html>
