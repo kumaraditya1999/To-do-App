@@ -39,5 +39,5 @@ Passwords is stored as hash.
 ![modify](https://github.com/kumaraditya1999/To-do-app/blob/master/screen%20shots/modify.png)
 ![notes](https://github.com/kumaraditya1999/To-do-app/blob/master/screen%20shots/notes_page.png)
 ### PS
-It uses jquery cdn so it may be slow to operate sometime based of the internet connection . This is just a starting project but feel free to raise an issue :smiley:.
+It uses jquery cdn so it may be slow to operate sometime based of the internet connection . This is just a simple project but feel free to raise an issue :smiley:.
 
