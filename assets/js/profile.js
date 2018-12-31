@@ -269,7 +269,6 @@ $(document).ready(function(){
 								</div>\
 							</div>\
 							<div class=\"card-footer\">\
-								<button class=\"btn btn-default\"><i class=\"fas fa-pen meetings-mod\"></i></button>\
 								<button class=\"btn btn-default\"><i class=\"fas fa-times meetings-del\"></i></button>\
 							</div>\
 							</div>");
@@ -308,6 +307,186 @@ $(document).ready(function(){
 				}
 			});
 		});
+
+		
+$("#calender-note-add").click(function(){
+
+	$("#calenderModal").modal("hide");
+
+});
+
+
+$("#calender-appointment-add").click(function(){
+
+	$("#calenderModal").modal("hide");
+
+});
+
+
+
+
+
+//CALENDER
+
+
+
+
+today = new Date();
+currentMonth = today.getMonth();
+currentYear = today.getFullYear();
+selectYear = document.getElementById("year");
+selectMonth = document.getElementById("month");
+
+months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+monthAndYear = document.getElementById("monthAndYear");
+showCalendar(currentMonth, currentYear);
+
+
+
+
+$("#next").click(function next() {
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
+    showCalendar(currentMonth, currentYear);
+});
+
+$("#previous").click(function previous() {
+	console.log("here");
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    showCalendar(currentMonth, currentYear);
+
+});
+
+
+$("select").change(function () {
+    currentYear = parseInt(selectYear.value);
+    currentMonth = parseInt(selectMonth.value);
+    showCalendar(currentMonth, currentYear);
+});
+
+function showCalendar(month, year) {
+
+    let firstDay = (new Date(year, month)).getDay();
+
+    tbl = document.getElementById("calendar-body"); // body of the calendar
+
+    // clearing all previous cells
+    tbl.innerHTML = "";
+
+    // filing data about month and in the page via DOM.
+    monthAndYear.innerHTML = months[month] + " " + year;
+    selectYear.value = year;
+    selectMonth.value = month;
+
+    // creating all cells
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+        // creates a table row
+        let row = document.createElement("tr");
+
+        //creating individual cells, filing them up with data.
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDay) {
+                cell = document.createElement("td");
+                cellText = document.createTextNode("");
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+            else if (date > daysInMonth(month, year)) {
+                break;
+            }
+
+            else {
+                cell = document.createElement("td");
+                cellText = document.createTextNode(date);
+                if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+                    cell.classList.add("bg-info");
+                } // color today's date
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+                date++;
+            }
+
+
+        }
+
+        tbl.appendChild(row); // appending each row into calendar body.
+
+    }
+
+    var tds = document.querySelectorAll('td');
+ 
+        for(var j =0;j<tds.length;j++){
+        	//highlight the appointments
+        	var meetings = $("#meetings .meetings");
+
+        	var dateTitle = document.getElementById('monthAndYear');
+                var tempDate = dateTitle.innerHTML.split(' ');
+                //console.log(tempDate);
+                var year = tempDate[1];
+                var month = months.indexOf(tempDate[0])+1;
+                //console.log(year+"-"+month+"-"+e.toElement.innerHTML);
+                var this_date2 = year+"-"+month+"-"+tds[j].innerHTML; 
+    
+        	var donetemp = 0;
+        	for(var k=0;k<meetings.length;k++){
+        		var this_date = meetings[k].children[1].children[2].innerHTML.split(' ')[2].split('\n')[0];
+        		console.log(this_date);
+        		
+        		 
+        		 if(this_date ==  this_date2){
+        		 	tds[j].style.backgroundColor = "#FFDD02";
+        		 }
+        	}
+        	
+        	console.log(tds[j].innerHTML);
+
+            tds[j].addEventListener('click',function(e){
+                //console.log(e.toElement.innerHTML);
+                var dateTitle = document.getElementById('monthAndYear');
+                var tempDate = dateTitle.innerHTML.split(' ');
+                //console.log(tempDate);
+                var year = tempDate[1];
+                var month = months.indexOf(tempDate[0])+1;
+                //console.log(year+"-"+month+"-"+e.toElement.innerHTML);
+                var this_date = year+"-"+month+"-"+e.toElement.innerHTML; 
+                
+                console.log();
+                $("#calender-modal-body")[0].innerHTML = "";
+                var meetings = $("#meetings .meetings");
+                //console.log(meetings);
+                var donetemp = 0;
+                for(var i=0;i<meetings.length;i++){
+                	var date = meetings[i].children[1].children[2].innerHTML.split(' ')[2].split('\n')[0];
+                	//console.log(meetings[i].children[1].children[1]);
+                	var withtemp = meetings[i].children[1].children[1].innerHTML;
+                	 var timetemp = meetings[i].children[1].children[3].innerHTML;
+                	 
+                	 if(this_date ==  date){
+                	 	$("#calender-modal-body").append("You have meeting "+withtemp+" "+timetemp+'\n');
+                	 	donetemp++;
+                	 }
+                }
+                if(donetemp==0){
+                	$("#calender-modal-body").append("-- You have nothing on this date --");
+                }
+
+                $("#calenderModal").modal();
+                //var("#calenderModal")
+            });
+        }
+
+}
+
+
+// check how many days in a month code from https://dzone.com/articles/determining-number-days-month
+function daysInMonth(iMonth, iYear) {
+    return 32 - new Date(iYear, iMonth, 32).getDate();
+}
+
+
 
 
 
