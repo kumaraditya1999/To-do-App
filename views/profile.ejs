@@ -18,36 +18,63 @@
 		   	color: gray;
 		   	cursor: pointer;
 		   }
+		   .navbar-brand{
+		   	size: 100;
+		   }
+
+		   
+
+		   .card{
+		   	width: 47%;
+		   	margin: 0 auto;
+		   	display: inline-block;
+		   }
+
+		   .btn{
+		   	margin: 10 10 10 10;
+		   }
+
+		   #calender{
+		   	width: 80%;
+		   	margin: auto;
+		   	padding: auto;
+		   }
+
+		   .error{
+		   	font-size: 10px;
+		   	color: red;
+		   	font-weight: bold;
+		   }
 		   
 
 		</style>
 	</head>
 	<body>
 		<nav class="nav navbar navbar-light ">
-			<span class="navbar-brand">TO DO</span>
+			<span class="navbar-brand"><strong><font size="30">TO DO</font></strong></span>
 
 
-			<button id="logout-btn" class="btn">logout</button>	
+			<button id="logout-btn" class="btn"><strong>LOGOUT</strong></button>	
 		</nav>	
 
 		<div class="container">
 
 			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 			  <li class="nav-item">
-			    <a class="nav-link active" id="pills-notes-tab" data-toggle="pill" href="#pills-notes" role="tab" aria-controls="pills-notes" aria-selected="true">Notes</a>
+			    <a class="nav-link active" id="pills-notes-tab" data-toggle="pill" href="#pills-notes" role="tab" aria-controls="pills-notes" aria-selected="true"><strong>Notes</strong></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="pills-meetings-tab" data-toggle="pill" href="#pills-meetings" role="tab" aria-controls="pills-meetings" aria-selected="false">Meetings</a>
+			    <a class="nav-link" id="pills-meetings-tab" data-toggle="pill" href="#pills-meetings" role="tab" aria-controls="pills-meetings" aria-selected="false"><strong>Meetings</strong></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="pills-calender-tab" data-toggle="pill" href="#pills-calender" role="tab" aria-controls="pills-calender" aria-selected="false">Calender</a>
+			    <a class="nav-link" id="pills-calender-tab" data-toggle="pill" href="#pills-calender" role="tab" aria-controls="pills-calender" aria-selected="false"><strong>Calender</strong></a>
 			  </li>
 			</ul>
 
 			<div class="tab-content" id="pills-tabContent">
 			  <div class="tab-pane fade show active" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab">
 			  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-				  Add Something
+				 <strong>Add Something</strong>
 				</button>
 				  	<div id="notes">
 						<%if(notes){ %>
@@ -77,7 +104,7 @@
 
 			  <div class="tab-pane fade" id="pills-meetings" role="tabpanel" aria-labelledby="pills-meetings-tab">
 			  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meetingsModal">
-				  Add an Appointment
+				<strong>Add an Appointment</strong>
 				</button>
 				  	<div id="meetings">
 						<%if(meetings){ %>
@@ -114,7 +141,7 @@
 			  <div class="tab-pane fade" id="pills-calender" role="tabpanel" aria-labelledby="pills-calender-tab">
 			  	
 				<div class="">
-				    <div class="card">
+				    <div class="card" id="calender">
 				        <h3 class="card-header" id="monthAndYear"></h3>
 				        <table class="table table-bordered table-responsive-sm" id="calendar">
 				            <thead>
@@ -136,14 +163,14 @@
 
 				        <div class="form-inline">
 
-				            <button class="btn btn-outline-primary col-sm-6" id="previous" >Previous</button>
+				            <button class="btn btn-outline-primary" id="previous" >Previous</button>
 
-				            <button class="btn btn-outline-primary col-sm-6" id="next" >Next</button>
+				            <button class="btn btn-outline-primary" id="next" >Next</button>
 				        </div>
 				        <br/>
 				        <form class="form-inline">
 				            <label class="lead mr-2 ml-2" for="month">Jump To: </label>
-				            <select class="form-control col-sm-4" name="month" id="month">
+				            <select class="form-control" name="month" id="month">
 				                <option value=0>Jan</option>
 				                <option value=1>Feb</option>
 				                <option value=2>Mar</option>
@@ -159,7 +186,7 @@
 				            </select>
 
 
-				            <label for="year"></label><select class="form-control col-sm-4" name="year" id="year" >
+				            <label for="year"></label><select class="form-control" name="year" id="year" >
 				            <option value=1990>1990</option>
 				            <option value=1991>1991</option>
 				            <option value=1992>1992</option>
@@ -203,6 +230,7 @@
 				            <option value=2030>2030</option>
 				        </select></form>
 				    </div>
+
 				</div>
 
 
@@ -297,34 +325,34 @@
 			      </div>
 			      <div class="modal-body">
 			        <form id="addition-meetings" >
-			        	<div id="no-meeting-title-error" style="display:none">
+			        	<div id="no-meeting-title-error" class="error" style="display:none">
 							Title is required
 						</div>
 						<div class="form-group">
 							<input type="text" placeholder="Title" name="meeting-title" id="meeting-title" class="form-control" required="true">
 						</div>
-						<div id="no-meeting-description-error" style="display:none">
+						<div id="no-meeting-description-error" class="error" style="display:none">
 							Description is required
 						</div>
 						<div class="form-group">
 							<input type="text" name="meeting-description" placeholder="Description" id="meeting-description" class="form-control"required="true">
 						</div>
-						<div id="no-user-error" style="display:none">
+						<div id="no-user-error" class="error" style="display:none">
 							username not found
 						</div>
-						<div id="no-meeting-with-error" style="display:none">
+						<div id="no-meeting-with-error" class="error" style="display:none">
 							Username is required
 						</div>
 						<div class="form-group">
 							<input type="text" name="meeting-with" placeholder="Enter the appointee's username" id="meeting-with" class="form-control"required="true">
 						</div>
-						<div id="no-meeting-date-error" style="display:none">
+						<div id="no-meeting-date-error" class="error" style="display:none">
 							Date is required
 						</div>
 						<div class="form-group">
 							<input type="date" name="meeting-date" id="meeting-date" required="true">
 						</div>
-						<div id="no-meeting-time-error" style="display:none">
+						<div id="no-meeting-time-error" class="error" style="display:none">
 							Time is required
 						</div>
 						<div class="form-group">
