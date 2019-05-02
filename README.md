@@ -26,11 +26,11 @@ Passwords is stored as hash.
 
 ## Dependencies
 
-1. [NodeJs](https://nodejs.org/en/download) is compulsory for installation !!!.
+1. [NodeJs](https://nodejs.org/en/download).
 
-2. [Jquery](https://jquery.com/) cdn is used.
+2. [Jquery](https://jquery.com/).
 
-3. [Boostrap](https://getbootstrap.com/) for frontend.
+3. [Boostrap](https://getbootstrap.com/).
 
 ## Working screenshots
 ![calender](https://github.com/kumaraditya1999/To-do-app/blob/master/screen%20shots/calender.png)
